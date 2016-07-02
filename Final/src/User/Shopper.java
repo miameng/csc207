@@ -17,30 +17,30 @@ public class Shopper extends User {
     }
 
     public void addToCart(Order order) {
-        for (Order i: cart)
+        for (Order i : cart)
             if (i.getShop() == order.getShop()) {
                 i.setQuantity(i.getQuantity() + order.getQuantity());
                 return;
             }
         cart.add(order);
-	}
-	
-	public void ship(Order order) {
-	    
-	}
-	
-	public void giveOrder() {
-	    
-	}
-	
-	public String invoice() {
-	    return cart.toString();
-	}
-	
-	public String purchases() {
-		String result = "";
-		for (Order o: purchased)
-			result += o;
-		return result;
-	}
+    }
+
+    public void ship(Order order) {
+
+    }
+
+    public void giveOrder() {
+
+    }
+
+    public String invoice() {
+        return cart.toString();
+    }
+
+    public String purchases() {
+        String result = "";
+        for (Order o : purchased)
+            result += o;
+        return result;
+    }
 }
