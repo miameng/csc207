@@ -8,20 +8,28 @@ import Merchandise.Order;
 
 public class Shopper extends User {
 
-    Invoice cart;
-	List<Invoice> purchased;
+	List<Order> cart, purchased;
 
 	public Shopper(Background background, String iD, String password) {
         super(background, iD, password);
-        cart = new Invoice();
-        purchased = new LinkedList<Invoice>();
+        cart = new LinkedList<Order>();
+        purchased = new LinkedList<Order>();
     }
 
 	public void addToCart(Order order) {
-		cart.modify(order);
+        for (Order i: cart)
+            if (i.getShop() == order.getShop()) {
+                i.setQuantity(i.getQuantity() + order.getQuantity());
+                return;
+            }
+        cart.add(order);
 	}
 	
-	public void order() {
+	public void ship(Order order) {
+	    
+	}
+	
+	public void giveOrder() {
 	    
 	}
 	
@@ -31,7 +39,7 @@ public class Shopper extends User {
 	
 	public String purchases() {
 		String result = "";
-		for (Invoice o: purchased)
+		for (Order o: purchased)
 			result += o;
 		return result;
 	}

@@ -1,15 +1,24 @@
 package Merchandise;
 
-public class Order extends Inventory {
+public class Order {
 
-    public Order(Inventory inventory, int quantity) {
-        super(inventory, quantity);
+    private final Shop shop;
+    private int quantity;
+
+    public Order(Shop shop, int quantity) {
+        this.shop = shop;
+        this.quantity = quantity;
         // TODO Auto-generated constructor stub
     }
 
-    public Order(Merchandise merchandise, int quantity) {
-        super(merchandise, quantity);
-        // TODO Auto-generated constructor stub
+    public Shop getShop() {
+        return shop;
+    }
+    public int getQuantity() {
+        return quantity;
+    }
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
 }

@@ -9,11 +9,6 @@ abstract class Inventory {
         this.quantity = quantity;
     }
 
-    public Inventory(Inventory inventory, int quantity) {
-        this.merchandise = inventory.merchandise;
-        this.quantity = quantity;
-    }
-
     public int getQuantity() {
         return quantity;
     }

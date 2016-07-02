@@ -3,7 +3,8 @@ package Background;
 import java.util.List;
 
 import Client.Client;
-import Merchandise.Inventory;
+import Merchandise.Order;
+import Merchandise.Shop;
 import User.Shopper;
 import User.User;
 
@@ -12,7 +13,7 @@ public class Background {
     User user;
     Client client;
 	List<User> users;
-	List<Inventory> inventories;
+	List<Shop> shops;
 	
 	public Background(Client client) {
 	    this.client = client;
@@ -44,5 +45,17 @@ public class Background {
 	
 	public void userLogout() {
 	    user = null;
+	}
+	
+	/**
+	 * Ship an order to the shopper if an order is coming.
+	 * Throws UserCategoryConfusionError if it is an administrator in control.
+	 * @param order
+	 */
+	public void ship(Order order) {
+	    if (user instanceof Shopper)
+	        ((Shopper) user).ship(order);
+	    else
+	        throw new UserCategoryConfusionError("Unable to ship goods to an administrator.");
 	}
 }

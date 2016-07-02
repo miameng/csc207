@@ -10,12 +10,14 @@ class Merchandise {
 	private final int ID;
 	private String discription;
 	private List<Category> categories;
+	private List<Shop> shops;
     
 	public Merchandise(Image image, String discription) {
         this.image = image;
         ID = number++;
         this.discription = discription;
         categories = new LinkedList<Category>();
+        shops = new LinkedList<Shop>();
     }
     
 	public Image getImage() {
