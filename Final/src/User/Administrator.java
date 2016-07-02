@@ -4,24 +4,23 @@ import Background.Background;
 
 public class Administrator extends User {
 
-	public Administrator(Background background, String iD, String password) {
+    public Administrator(Background background, String iD, String password) {
         super(background, iD, password);
-        // TODO Auto-generated constructor stub
     }
 
     public void browse() {
-		// TODO
-	}
-	
-	public void maintainCategories() {
-		
-	}
-	
-	public void maitainProducts() {
-		
-	}
-	
-	public void displayProducts() {
-		
-	}
+        
+    }
+    
+    public void maintainCategories() {
+        
+    }
+    
+    public void maitainProducts() {
+       
+    }
+
+public void displayProducts() {
+        
+    }
 }
