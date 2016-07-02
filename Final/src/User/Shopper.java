@@ -8,14 +8,18 @@ import Merchandise.Order;
 
 public class Shopper extends User {
 
-    List<Order> cart, purchased;
+    List<Order> cart, purchases;
 
     public Shopper(Background background, String iD, String password) {
         super(background, iD, password);
         cart = new LinkedList<Order>();
-        purchased = new LinkedList<Order>();
+        purchases = new LinkedList<Order>();
     }
-
+    
+    public List<Order> getPurchases() {
+        return purchases;
+    }
+    
     public void addToCart(Order order) {
         for (Order i : cart)
             if (i.getShop() == order.getShop()) {
@@ -25,22 +29,28 @@ public class Shopper extends User {
         cart.add(order);
     }
 
+    /**
+     * Receives the shipped order.
+     * @param order
+     */
     public void ship(Order order) {
-
+        this.purchases.add(order);
     }
 
-    public void giveOrder() {
-
+    /**
+     * Gives orders to the background.
+     * Report errors to the background if the current user is an administrator.
+     */
+    public void purchase() {
+        for (Order o: cart)
+            background.giveOrder(o);
+        
+        cart.clear();
     }
 
     public String invoice() {
-        return cart.toString();
-    }
-
-    public String purchases() {
-        String result = "";
-        for (Order o : purchased)
-            result += o;
+        String result = cart.toString();
+        // TODO
         return result;
     }
 }

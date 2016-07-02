@@ -20,7 +20,7 @@ public class Administrator extends User {
        
     }
 
-public void displayProducts() {
+    public void displayProducts() {
         
     }
 }

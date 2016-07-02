@@ -41,6 +41,10 @@ class Merchandise {
     public void addCategory(Category category) {
         this.categories.add(category);
     }
-	
-	
+    public List<Shop> getShops() {
+        return shops;
+    }
+    public void addShop(Shop shop) {
+        this.shops.add(shop);
+    }
 }

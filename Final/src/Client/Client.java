@@ -14,6 +14,10 @@ public class Client {
         this.background = background;
     }
 
+    public void message(String message) {
+        // TODO
+    }
+    
     void userRegistration() {
         String ID = null, password = null, type = null;
         // TODO 
