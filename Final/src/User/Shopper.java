@@ -8,15 +8,15 @@ import Merchandise.Order;
 
 public class Shopper extends User {
 
-	List<Order> cart, purchased;
+    List<Order> cart, purchased;
 
-	public Shopper(Background background, String iD, String password) {
+    public Shopper(Background background, String iD, String password) {
         super(background, iD, password);
         cart = new LinkedList<Order>();
         purchased = new LinkedList<Order>();
     }
 
-	public void addToCart(Order order) {
+    public void addToCart(Order order) {
         for (Order i: cart)
             if (i.getShop() == order.getShop()) {
                 i.setQuantity(i.getQuantity() + order.getQuantity());
