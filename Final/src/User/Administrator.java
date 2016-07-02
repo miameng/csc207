@@ -1,17 +1,16 @@
 package User;
 
+import Background.Background;
+
 public class Administrator extends User {
 
-	public void browse() {
-		
-	}
-	
-	public void registration() {
-		
-	}
-	
-	public void login() {
-		
+	public Administrator(Background background, String iD, String password) {
+        super(background, iD, password);
+        // TODO Auto-generated constructor stub
+    }
+
+    public void browse() {
+		// TODO
 	}
 	
 	public void maintainCategories() {
