@@ -1,12 +1,9 @@
 package Product;
 
-import java.util.List;
-
 public class Order {
 
     private final Product product;
     private int quantity;
-    private List<Category> categories;
 
     public Order(Product product, int quantity) {
         this.product = product;

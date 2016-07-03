@@ -53,7 +53,7 @@ public class Administrator extends User {
      */
     public void addProduct(List<Product> products, 
             Image image, String description, double price, int quantity) {
-        products.add(new Product(this.background, image, description, price, quantity));
+        products.add(new Product(image, description, price, quantity));
     }
     
     /**

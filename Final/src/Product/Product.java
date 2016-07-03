@@ -4,13 +4,10 @@ import java.awt.Image;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import Background.Background;
 import Background.MerchandiseShortError;
-import Background.UserCategoryConfusionError;
 
 public class Product {
 
-    private final Background background;
     private static int number;
     private final int ID;
     private Image image;
@@ -19,8 +16,7 @@ public class Product {
     private int quantity;
     SortedSet<Category> categories;
 
-    public Product(Background background, Image image, String description, double price, int quantity) {
-        this.background = background;
+    public Product(Image image, String description, double price, int quantity) {
         ID = ++number;
         this.image = image;
         this.description = description;
