@@ -3,8 +3,7 @@ package Client;
 import Background.Background;
 import Background.UserAlreadyExistsError;
 import Background.UserCategoryWrongError;
-import Background.UserDoesNotExistError;
-import Background.UserPasswordWrongError;
+import Background.UserLoginFailureError;
 
 public class Client {
 	
@@ -15,7 +14,7 @@ public class Client {
     }
 
     public void message(String message) {
-        // TODO
+        // TODO to try message something on the menu
     }
     
     void userRegistration() {
@@ -37,9 +36,7 @@ public class Client {
         // read the ID and the password
         try {
             background.userLogin(ID, password);
-        } catch (UserPasswordWrongError e) {
-            // TODO
-        } catch (UserDoesNotExistError e) {
+        } catch (UserLoginFailureError e) {
             // TODO
         }
 	}

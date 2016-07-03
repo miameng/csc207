@@ -3,7 +3,7 @@ package Product;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Category {
+public class Category implements Comparable<Category> {
     private static int number;
     private final int code;
     private String description;
@@ -13,6 +13,11 @@ public class Category {
         this.code = number++;
         this.description = description;
         products = new LinkedList<Product>();
+    }
+    
+    @Override
+    public int compareTo(Category other) {
+        return this.code - other.code;
     }
 
     public int getCode() {

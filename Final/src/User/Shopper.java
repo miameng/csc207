@@ -4,20 +4,18 @@ import java.util.LinkedList;
 import java.util.List;
 
 import Background.Background;
+import Background.MerchandiseShortError;
 import Product.Order;
 
 public class Shopper extends User {
 
-    List<Order> cart, purchases;
+    List<Order> cart;
+    List<List<Order>> purchases;
 
     public Shopper(Background background, String iD, String password) {
         super(background, iD, password);
         cart = new LinkedList<Order>();
-        purchases = new LinkedList<Order>();
-    }
-    
-    public List<Order> getPurchases() {
-        return purchases;
+        purchases = new LinkedList<List<Order>>();
     }
     
     /**
@@ -34,27 +32,23 @@ public class Shopper extends User {
     }
 
     /**
-     * Receives the shipped order.
-     * @param order
-     */
-    public void ship(Order order) {
-        this.purchases.add(order);
-    }
-
-    /**
      * Gives orders to the background.
      * Report errors to the background if the current user is an administrator.
      */
-    public void purchase() {
+    public void purchase() throws MerchandiseShortError {
         for (Order o: cart)
-            background.giveOrder(o);
+            o.getProduct().ship(o.getQuantity());
         
-        cart.clear();
+        purchases.add(cart);
+        cart = new LinkedList<Order>();
     }
-
-    public String invoice() {
-        String result = cart.toString();
-        // TODO
-        return result;
+    
+    /**
+     * Shows a list of former purchases.
+     * @return
+     */
+    public List<List<Order>> showPurchases() {
+        return purchases;
     }
+    
 }

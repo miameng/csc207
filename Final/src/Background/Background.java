@@ -1,5 +1,6 @@
 package Background;
 
+import java.awt.Image;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class Background {
 	 */
 	public void userRegistration(String ID, String password, String type) {
 	    for (User u: users)
-	        if (u.getID() == ID)
+	        if (u.ID == ID)
 	            throw new UserAlreadyExistsError("User " + ID + " already exists.");
 	    if (type == "Shopper")
 	        users.add((new Shopper(this, ID, password)));
@@ -54,54 +55,96 @@ public class Background {
 	 */
 	public void userLogin(String ID, String password) {
 	    for (User u: users)
-	        if (u.getID() == ID) {
-	            if (u.getPassword() != password)
-	                throw new UserPasswordWrongError();
-	            
-	            user = u;
+	        if (u.login(ID, password))
 	            return;
-	        }
-	    throw new UserDoesNotExistError("No such user named " + ID + ".");
+	    throw new UserLoginFailureError();
 	}
 	
 	/**
 	 * Logs out the current user.
 	 */
 	public void userLogout() {
-	    user = null;
+	    user.logout();
 	}
 	
 	/**
 	 * Adds a category to the selected products.
-     * Throws UserCategoryConfusionError if the current user is an administrator.
-     * @param discription
+     * Throws UserCategoryConfusionError if the current user is an Shopper.
+     * @param description
 	 */
-	public void addCategory(String discription) {
+	public void addCategory(String description) {
 	    if (!(user instanceof Administrator))
 	        throw new UserCategoryConfusionError("Unable for an shopper to maintain categories.");
 	    
-        Category category = null;
-	    for (Category c: categories)
-	        if (c.getDescription() == discription) {
-	            category = c; break;
-	        }
-	    if (category == null) {
-	        category = new Category(discription);
-	        categories.add(category);
-	    }
-        
-	    for (Product product: selectedProducts)
-	        product.addCategory(category);
+	    ((Administrator) user).addCategory(description, categories, selectedProducts);
 	}
 	
 	/**
-	 * Returns the categories.
+	 * Generates a list of the categories.
+     * Throws UserCategoryConfusionError if the current user is an Shopper.
 	 * @return
 	 */
-	public List<Category> getCategories() {
-        return categories;
+	public List<Category> generateCategories() {
+        if (!(user instanceof Administrator))
+            throw new UserCategoryConfusionError("Unable for an shopper to maintain categories.");
+        
+        return ((Administrator) user).generateCategories(categories);
     }
+	
+	/**
+	 * Adds a new product with properties.
+     * Throws UserCategoryConfusionError if the current user is an Shopper.
+	 * @param image
+	 * @param description
+	 * @param price
+	 * @param quantity
+	 */
+	public void addProduct(Image image, String description, double price, int quantity) {
+        if (!(user instanceof Administrator))
+            throw new UserCategoryConfusionError("Unable for an shopper to maintain categories.");
+	    
+        ((Administrator) user).addProduct(products, image, description, price, quantity);
+	}
 
+    /**
+     * Changes the image of selected products.
+     * Throws UserCategoryConfusionError if the current user is an Shopper.
+     * @param products
+     * @param image
+     */
+    public void changeProductImage(Image image) {
+        if (!(user instanceof Administrator))
+            throw new UserCategoryConfusionError("Unable for an shopper to maintain categories.");
+        
+        ((Administrator) user).changeProductImage(selectedProducts, image);
+    }
+    
+    /**
+     * Changes the description of selected products.
+     * Throws UserCategoryConfusionError if the current user is an Shopper.
+     * @param products
+     * @param description
+     */
+    public void changeProductDiscription(List<Product> products, String description) {
+        if (!(user instanceof Administrator))
+            throw new UserCategoryConfusionError("Unable for an shopper to maintain categories.");
+        
+        ((Administrator) user).changeProductDiscription(selectedProducts, description);
+    }
+    
+    /**
+     * Changes the description of selected products.
+     * Throws UserCategoryConfusionError if the current user is an Shopper.
+     * @param products
+     * @param price
+     */
+    public void changeProductPrice(List<Product> products, double price) {
+        if (!(user instanceof Administrator))
+            throw new UserCategoryConfusionError("Unable for an shopper to maintain categories.");
+        
+        ((Administrator) user).changeProductPrice(selectedProducts, price);
+    }
+    
     /**
 	 * Add the goods of quantity in product to the cart.
      * Throws UserCategoryConfusionError if the current user is an administrator.
@@ -123,45 +166,18 @@ public class Background {
 	 * Throws UserCategoryConfusionError if the current user is an administrator.
 	 */
 	public void purchase() {
-        if (user instanceof Shopper)
-            ((Shopper) user).purchase();
-        else
+        if (!(user instanceof Shopper))
             throw new UserCategoryConfusionError("Unable for an administrator to give orders.");
-	}
-	
-	/**
-	 * Gives an order to the product.
-     * Throws MerchandiseShortError if there is not enough goods available in the stock.
-	 * @param order
-	 */
-	public void giveOrder(Order order) {
-	    try {
-	        order.getProduct().ship(order.getQuantity());
-	    } catch (MerchandiseShortError e) {
-	        throw e;
-	    }
-	}
-	
-	/**
-	 * Ship an order to the shopper if an order is coming.
-	 * Throws UserCategoryConfusionError if the current user is an administrator.
-	 * @param order
-	 */
-	public void ship(Order order) {
-	    if (user instanceof Shopper)
-	        ((Shopper) user).ship(order);
-	    else
-	        throw new UserCategoryConfusionError("Unable to ship goods to an administrator.");
+        ((Shopper) user).purchase();
 	}
 	
 	/**
 	 * Shows the purchases of the current user.
 	 * Throws UserCategoryConfusionError if the current user is an administrator.
 	 */
-	public List<Order> showPurchases() {
-        if (user instanceof Shopper)
-            return ((Shopper) user).getPurchases();
-        else
+	public List<List<Order>> showPurchases() {
+        if (!(user instanceof Shopper))
             throw new UserCategoryConfusionError("Unable to show purchases of an administrator.");
+        return ((Shopper) user).showPurchases();
 	}
 }

@@ -1,8 +1,8 @@
 package Product;
 
 import java.awt.Image;
-import java.util.List;
-import java.util.LinkedList;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import Background.Background;
 import Background.MerchandiseShortError;
@@ -14,17 +14,19 @@ public class Product {
     private static int number;
     private final int ID;
     private Image image;
-    private String discription;
+    private String description;
+    private double price;
     private int quantity;
-    List<Category> categories;
+    SortedSet<Category> categories;
 
-    public Product(Background background, Image image, String discription, int quantity) {
+    public Product(Background background, Image image, String description, double price, int quantity) {
         this.background = background;
         ID = ++number;
         this.image = image;
-        this.discription = discription;
+        this.description = description;
+        this.price = price;
         this.quantity = quantity;
-        this.categories = new LinkedList<Category>();
+        this.categories = new TreeSet<Category>();
     }
 
     public Image getImage() {
@@ -34,23 +36,32 @@ public class Product {
         this.image = image;
     }
     public String getDiscription() {
-        return discription;
+        return description;
     }
-    public void setDiscription(String discription) {
-        this.discription = discription;
+    public void setDiscription(String description) {
+        this.description = description;
     }
     public int getID() {
         return ID;
     }
-    public List<Category> getCategories() {
+    public int getQuantity() {
+        return quantity;
+    }
+    public double getPrice() {
+        return price;
+    }
+    public void setPrice(double price) {
+        this.price = price;
+    }
+    public SortedSet<Category> getCategories() {
         return categories;
     }
+    /**
+     * Adds a new category to this product.
+     * @param category
+     */
     public void addCategory(Category category) {
-        if (categories.contains(category)); // TODO what to do?
-        else {
-            categories.add(category);
-            category.addProduct(this);
-        }
+        categories.add(category);
     }
 
     /**
@@ -65,19 +76,12 @@ public class Product {
     /**
      * Ships goods and reports to background.
      * Throws MerchandiseShortError if there is not enough goods available in the stock.
-     * Throws UserCategoryConfusionError and cancel the shipping if there occurs any error. 
      * @param wanted
      */
     public void ship(int wanted) {
         if (!available(wanted))
             throw new MerchandiseShortError(); // not enough goods
         
-        try {
-            this.quantity -= wanted;
-            background.ship(new Order(this, wanted));
-        } catch (UserCategoryConfusionError e) { // goods not successfully sent
-            this.quantity += wanted;
-            throw e;
-        }
+        this.quantity -= wanted;
     }
 }
