@@ -1,23 +1,29 @@
 package Background;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import Client.Client;
-import Merchandise.Order;
-import Merchandise.Shop;
+import Product.Category;
+import Product.Order;
+import Product.Product;
+import User.Administrator;
 import User.Shopper;
 import User.User;
 
 public class Background {
 	
-    User user;
+    public User user;
     Client client;
 	List<User> users;
-	List<Shop> shops;
+	List<Product> products, selectedProducts;
+	List<Category> categories, selectedCats;
 	
 	public Background(Client client) {
 	    this.client = client;
+	    // TODO
 	    // read files for users and inventories
+        categories = new LinkedList<Category>();
 	}
 	
 	/**
@@ -33,7 +39,7 @@ public class Background {
 	        if (u.getID() == ID)
 	            throw new UserAlreadyExistsError("User " + ID + " already exists.");
 	    if (type == "Shopper")
-	        users.add(new Shopper(this, ID, password));
+	        users.add((new Shopper(this, ID, password)));
 	    else if (type == "Administrator")
             users.add(new Shopper(this, ID, password));
 	    else throw new UserCategoryWrongError("Unknown user category " + type + ".");
@@ -66,19 +72,50 @@ public class Background {
 	}
 	
 	/**
-	 * Add the goods of quantity in shop to the cart.
+	 * Adds a category to the selected products.
+     * Throws UserCategoryConfusionError if the current user is an administrator.
+     * @param discription
+	 */
+	public void addCategory(String discription) {
+	    if (!(user instanceof Administrator))
+	        throw new UserCategoryConfusionError("Unable for an shopper to maintain categories.");
+	    
+        Category category = null;
+	    for (Category c: categories)
+	        if (c.getDescription() == discription) {
+	            category = c; break;
+	        }
+	    if (category == null) {
+	        category = new Category(discription);
+	        categories.add(category);
+	    }
+        
+	    for (Product product: selectedProducts)
+	        product.addCategory(category);
+	}
+	
+	/**
+	 * Returns the categories.
+	 * @return
+	 */
+	public List<Category> getCategories() {
+        return categories;
+    }
+
+    /**
+	 * Add the goods of quantity in product to the cart.
      * Throws UserCategoryConfusionError if the current user is an administrator.
      * Throws MerchandiseShortError if there is not enough goods available in the stock.
-	 * @param shop
+	 * @param product
 	 * @param quantity
 	 */
-	public void addToCart(Shop shop, int quantity) {
+	public void addToCart(Product product, int quantity) {
         if (!(user instanceof Shopper))
             throw new UserCategoryConfusionError("Unable for an administrator to add goods to the cart.");
-        else if (!shop.available(quantity))
+        if (!product.available(quantity))
 	        throw new MerchandiseShortError();
-        else
-            ((Shopper) user).addToCart(new Order(shop, quantity));
+        
+        ((Shopper) user).addToCart(new Order(product, quantity));
 	} 
 	
 	/**
@@ -93,13 +130,13 @@ public class Background {
 	}
 	
 	/**
-	 * Gives an order to the shop.
+	 * Gives an order to the product.
      * Throws MerchandiseShortError if there is not enough goods available in the stock.
 	 * @param order
 	 */
 	public void giveOrder(Order order) {
 	    try {
-	        order.getShop().ship(order.getQuantity());
+	        order.getProduct().ship(order.getQuantity());
 	    } catch (MerchandiseShortError e) {
 	        throw e;
 	    }
@@ -115,5 +152,16 @@ public class Background {
 	        ((Shopper) user).ship(order);
 	    else
 	        throw new UserCategoryConfusionError("Unable to ship goods to an administrator.");
+	}
+	
+	/**
+	 * Shows the purchases of the current user.
+	 * Throws UserCategoryConfusionError if the current user is an administrator.
+	 */
+	public List<Order> showPurchases() {
+        if (user instanceof Shopper)
+            return ((Shopper) user).getPurchases();
+        else
+            throw new UserCategoryConfusionError("Unable to show purchases of an administrator.");
 	}
 }

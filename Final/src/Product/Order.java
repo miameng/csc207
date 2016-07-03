@@ -1,18 +1,21 @@
-package Merchandise;
+package Product;
+
+import java.util.List;
 
 public class Order {
 
-    private final Shop shop;
+    private final Product product;
     private int quantity;
+    private List<Category> categories;
 
-    public Order(Shop shop, int quantity) {
-        this.shop = shop;
+    public Order(Product product, int quantity) {
+        this.product = product;
         this.quantity = quantity;
         // TODO Auto-generated constructor stub
     }
 
-    public Shop getShop() {
-        return shop;
+    public Product getProduct() {
+        return product;
     }
     public int getQuantity() {
         return quantity;

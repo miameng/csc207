@@ -1,18 +1,18 @@
-package Merchandise;
+package Product;
 
 import java.util.LinkedList;
 import java.util.List;
 
-class Category {
+public class Category {
     private static int number;
     private final int code;
     private String description;
-    List<Merchandise> merchandises;
+    List<Product> products;
     
     public Category(String description) {
         this.code = number++;
         this.description = description;
-        merchandises = new LinkedList<Merchandise>();
+        products = new LinkedList<Product>();
     }
 
     public int getCode() {
@@ -24,11 +24,12 @@ class Category {
     public void setDescription(String description) {
         this.description = description;
     }
-    public List<Merchandise> getMerchandises() {
-        return merchandises;
+    public List<Product> getProducts() {
+        return products;
     }
-    public void addMerchandises(Merchandise merchandise) {
-        this.merchandises.add(merchandise);
+    public void addProduct(Product product) {
+        for (Product s: products)
+            if (s == product) return;
+        products.add(product);
     }
-
 }

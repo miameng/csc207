@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import Background.Background;
-import Merchandise.Order;
+import Product.Order;
 
 public class Shopper extends User {
 
@@ -20,9 +20,13 @@ public class Shopper extends User {
         return purchases;
     }
     
+    /**
+     * Adds an order to the cart.
+     * @param order
+     */
     public void addToCart(Order order) {
         for (Order i : cart)
-            if (i.getShop() == order.getShop()) {
+            if (i.getProduct() == order.getProduct()) {
                 i.setQuantity(i.getQuantity() + order.getQuantity());
                 return;
             }
