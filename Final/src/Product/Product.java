@@ -1,8 +1,8 @@
 package Product;
 
 import java.awt.Image;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.LinkedList;
 
 import Background.Background;
 import Background.MerchandiseShortError;
