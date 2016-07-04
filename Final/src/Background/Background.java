@@ -39,9 +39,9 @@ public class Background {
 	        if (u.ID == ID)
 	            throw new UserAlreadyExistsError("User " + ID + " already exists.");
 	    if (type == "Shopper")
-	        users.add((new Shopper(this, ID, password)));
+	        users.add((new Shopper(ID, password)));
 	    else if (type == "Administrator")
-            users.add(new Shopper(this, ID, password));
+            users.add(new Shopper(ID, password));
 	    else throw new UserCategoryWrongError("Unknown user category " + type + ".");
 	}
 	

@@ -3,8 +3,6 @@ package User;
 import java.util.LinkedList;
 import java.util.List;
 
-import Background.Background;
-import Background.MerchandiseShortError;
 import Product.Order;
 
 public class Shopper extends User {
@@ -12,8 +10,8 @@ public class Shopper extends User {
     List<Order> cart;
     List<List<Order>> purchases;
 
-    public Shopper(Background background, String iD, String password) {
-        super(background, iD, password);
+    public Shopper(String ID, String password) {
+        super(ID, password);
         cart = new LinkedList<Order>();
         purchases = new LinkedList<List<Order>>();
     }
@@ -35,7 +33,7 @@ public class Shopper extends User {
      * Gives orders to the background.
      * Report errors to the background if the current user is an administrator.
      */
-    public void purchase() throws MerchandiseShortError {
+    public void purchase() throws Error {
         for (Order o: cart)
             o.getProduct().ship(o.getQuantity());
         

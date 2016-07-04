@@ -6,7 +6,7 @@ import java.util.TreeSet;
 
 import Background.MerchandiseShortError;
 
-public class Product {
+public class Product implements Merchandise {
 
     private static int number;
     private final int ID;

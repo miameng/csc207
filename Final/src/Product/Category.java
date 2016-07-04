@@ -3,7 +3,7 @@ package Product;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Category implements Comparable<Category> {
+public class Category implements Comparable<Category>, Merchandise {
     private static int number;
     private final int code;
     private String description;

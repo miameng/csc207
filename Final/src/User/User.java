@@ -1,15 +1,11 @@
 package User;
 
-import Background.Background;
-
 public abstract class User {
     
-    final Background background;
     public final String ID;
     private String password;
 
-    public User(Background background, String ID, String password) {
-        this.background = background;
+    public User(String ID, String password) {
         this.ID = ID;
         this.password = password;
     }

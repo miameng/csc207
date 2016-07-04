@@ -4,7 +4,6 @@ import java.awt.Image;
 import java.util.Collections;
 import java.util.List;
 
-import Background.Background;
 import Product.Category;
 import Product.CompByAvai;
 import Product.CompByCate;
@@ -12,8 +11,8 @@ import Product.Product;
 
 public class Administrator extends User {
 
-    public Administrator(Background background, String iD, String password) {
-        super(background, iD, password);
+    public Administrator(String ID, String password) {
+        super(ID, password);
     }
 
     /**
@@ -32,7 +31,6 @@ public class Administrator extends User {
             category = new Category(description);
             categories.add(category);
         }
-        
         for (Product product: Products)
             product.addCategory(category);
     }

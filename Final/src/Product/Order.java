@@ -1,6 +1,6 @@
 package Product;
 
-public class Order {
+public class Order implements Merchandise {
 
     private final Product product;
     private int quantity;
