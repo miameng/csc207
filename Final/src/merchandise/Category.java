@@ -1,4 +1,4 @@
-package Product;
+package merchandise;
 
 import java.util.LinkedList;
 import java.util.List;

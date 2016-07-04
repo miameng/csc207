@@ -1,16 +1,15 @@
-package Background;
+package background;
 
 import java.awt.Image;
 import java.util.LinkedList;
 import java.util.List;
 
-import Client.Client;
-import Product.Category;
-import Product.Order;
-import Product.Product;
-import User.Administrator;
-import User.Shopper;
-import User.User;
+import merchandise.Category;
+import merchandise.Order;
+import merchandise.Product;
+import user.Administrator;
+import user.Shopper;
+import user.User;
 
 public class Background {
 	

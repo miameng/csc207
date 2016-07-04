@@ -1,10 +1,10 @@
-package Product;
+package merchandise;
 
 import java.awt.Image;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import Background.MerchandiseShortError;
+import background.MerchandiseShortError;
 
 public class Product implements Merchandise {
 

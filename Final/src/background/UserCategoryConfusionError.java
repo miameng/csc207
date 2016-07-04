@@ -1,4 +1,4 @@
-package Background;
+package background;
 
 public class UserCategoryConfusionError extends Error {
 

@@ -1,13 +1,13 @@
-package User;
+package user;
 
 import java.awt.Image;
 import java.util.Collections;
 import java.util.List;
 
-import Product.Category;
-import Product.CompByAvai;
-import Product.CompByCate;
-import Product.Product;
+import merchandise.Category;
+import merchandise.CompByAvai;
+import merchandise.CompByCate;
+import merchandise.Product;
 
 public class Administrator extends User {
 

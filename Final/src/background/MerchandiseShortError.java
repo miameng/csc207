@@ -1,4 +1,4 @@
-package Background;
+package background;
 
 public class MerchandiseShortError extends Error {
     private static final long serialVersionUID = 1L;

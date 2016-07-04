@@ -1,4 +1,4 @@
-package Product;
+package merchandise;
 
 public class Order implements Merchandise {
 

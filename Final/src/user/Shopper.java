@@ -1,9 +1,9 @@
-package User;
+package user;
 
 import java.util.LinkedList;
 import java.util.List;
 
-import Product.Order;
+import merchandise.Order;
 
 public class Shopper extends User {
 
