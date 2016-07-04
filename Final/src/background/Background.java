@@ -1,6 +1,7 @@
 package background;
 
 import java.awt.Image;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -19,10 +20,12 @@ public class Background {
 	private List<Category> categories;
 	
 	public Background() {
+	    users = new LinkedList<User>();
+	    products = new ArrayList<Product>(); // in ID order
+        categories = new ArrayList<Category>(); // in ID order
 	    // TODO
-	    // read files for users and products
+	    // read files for users, products and categories.
 	    selectedProducts = new LinkedList<Product>();
-        categories = new LinkedList<Category>();
 	}
 	
 	/**
@@ -124,7 +127,7 @@ public class Background {
      * @param products
      * @param description
      */
-    public void changeProductDiscription(List<Product> products, String description) {
+    public void changeProductDiscription(String description) {
         if (!(user instanceof Administrator))
             throw new UserCategoryConfusionError("Unable for an shopper to maintain categories.");
         
@@ -137,28 +140,40 @@ public class Background {
      * @param products
      * @param price
      */
-    public void changeProductPrice(List<Product> products, double price) {
+    public void changeProductPrice(double price) {
         if (!(user instanceof Administrator))
             throw new UserCategoryConfusionError("Unable for an shopper to maintain categories.");
         
         ((Administrator) user).changeProductPrice(selectedProducts, price);
     }
     
-    public void sortProducts(boolean byAvai, boolean inc) {
+    /**
+     * Returns a sorted version of all products by given order.
+     * @param byAvai
+     * @param inc
+     * @return
+     */
+    public List<Product> sortProducts(boolean byAvai, boolean inc) {
         if (!(user instanceof Administrator))
             throw new UserCategoryConfusionError("Unable for an shopper to maintain categories.");
         
-        ((Administrator) user).sortProducts(products, byAvai, inc);
+        return ((Administrator) user).sortProducts(new LinkedList<Product>(products), byAvai, inc);
     }
     
     /**
 	 * Add the goods of quantity in product to the cart.
+	 * Throws ProductDoesNotExistError if the product to add does not exist.
      * Throws UserCategoryConfusionError if the current user is an administrator.
      * Throws MerchandiseShortError if there is not enough goods available in the stock.
 	 * @param product
 	 * @param quantity
 	 */
-	public void addToCart(Product product, int quantity) {
+	public void addToCart(int ID, int quantity) {
+        Product product;
+	    try {product = products.get(ID);
+	    } catch (IndexOutOfBoundsException e) {
+	        throw new ProductDoesNotExistError();
+	    }
         if (!(user instanceof Shopper))
             throw new UserCategoryConfusionError("Unable for an administrator to add goods to the cart.");
         if (!product.available(quantity))

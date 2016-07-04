@@ -12,10 +12,10 @@
  * public List<Category> generateCategories()
  * public void addProduct(Image image, String description, double price, int quantity)
  * public void changeProductImage(Image image)
- * public void changeProductDiscription(List<Product> products, String description)
- * public void changeProductPrice(List<Product> products, double price)
+ * public void changeProductDiscription(String description)
+ * public void changeProductPrice(double price)
  * public void sortProducts(boolean byAvai, boolean inc)
- * public void addToCart(Product product, int quantity)
+ * public void addToCart(int ID, int quantity)
  * public void purchase()
  * public List<List<Order>> showPurchases()
  *

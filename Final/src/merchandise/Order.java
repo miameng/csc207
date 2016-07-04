@@ -1,6 +1,11 @@
 package merchandise;
 
-public class Order implements Merchandise {
+import java.awt.Image;
+import java.util.List;
+
+import client.Item;
+
+public class Order implements Item {
 
     private final Product product;
     private int quantity;
@@ -10,6 +15,17 @@ public class Order implements Merchandise {
         this.quantity = quantity;
         // TODO Auto-generated constructor stub
     }
+
+    @Override
+    public Image image() { return product.image(); }
+    @Override
+    public String description() { return product.description(); }
+    @Override
+    public int mainData() { return product.mainData(); }
+    @Override
+    public String extraData() { return String.format("%.2f", quantity * product.getPrice()); }
+    @Override
+    public List<Item> getTags() { return product.getTags(); }
 
     public Product getProduct() {
         return product;

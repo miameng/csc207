@@ -1,12 +1,13 @@
 package merchandise;
 
 import java.awt.Image;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.LinkedList;
+import java.util.List;
 
 import background.MerchandiseShortError;
+import client.Item;
 
-public class Product implements Merchandise {
+public class Product implements Item {
 
     private static int number;
     private final int ID;
@@ -14,7 +15,7 @@ public class Product implements Merchandise {
     private String description;
     private double price;
     private int quantity;
-    SortedSet<Category> categories;
+    List<Item> categories;
 
     public Product(Image image, String description, double price, int quantity) {
         ID = ++number;
@@ -22,8 +23,19 @@ public class Product implements Merchandise {
         this.description = description;
         this.price = price;
         this.quantity = quantity;
-        this.categories = new TreeSet<Category>();
+        this.categories = new LinkedList<Item>();
     }
+    
+    @Override
+    public Image image() { return image; }
+    @Override
+    public String description() { return description; }
+    @Override
+    public int mainData() { return quantity; }
+    @Override
+    public String extraData() { return String.format("%.2l", price); }
+    @Override
+    public List<Item> getTags() { return categories; }
 
     public Image getImage() {
         return image;
@@ -31,10 +43,10 @@ public class Product implements Merchandise {
     public void setImage(Image image) {
         this.image = image;
     }
-    public String getDiscription() {
+    public String getDescription() {
         return description;
     }
-    public void setDiscription(String description) {
+    public void setDescription(String description) {
         this.description = description;
     }
     public int getID() {
@@ -49,7 +61,7 @@ public class Product implements Merchandise {
     public void setPrice(double price) {
         this.price = price;
     }
-    public SortedSet<Category> getCategories() {
+    public List<Item> getCategories() {
         return categories;
     }
     /**

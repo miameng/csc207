@@ -74,7 +74,7 @@ public class Administrator extends User {
      */
     public void changeProductDiscription(List<Product> products, String description) {
         for (Product p: products)
-            p.setDiscription(description);
+            p.setDescription(description);
     }
     
     /**
@@ -93,8 +93,9 @@ public class Administrator extends User {
      * @param byAvai
      * @param inc
      */
-    public void sortProducts(List<Product> products, boolean byAvai, boolean inc) {
+    public List<Product> sortProducts(List<Product> products, boolean byAvai, boolean inc) {
         Collections.sort(products, byAvai ? new CompByAvai() : new CompByCate());
         if (!inc) Collections.reverse(products);
+        return products;
     }
 }
