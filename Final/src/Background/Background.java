@@ -54,9 +54,10 @@ public class Background {
 	 * @param password
 	 */
 	public void userLogin(String ID, String password) {
-	    for (User u: users)
-	        if (u.login(ID, password))
-	            return;
+	    for (User u: users) {
+	        user = u.login(ID, password);
+	        if (user != null) return;
+	    }
 	    throw new UserLoginFailureError();
 	}
 	
@@ -64,7 +65,7 @@ public class Background {
 	 * Logs out the current user.
 	 */
 	public void userLogout() {
-	    user.logout();
+	    user = user.logout();
 	}
 	
 	/**
@@ -168,6 +169,7 @@ public class Background {
 	public void purchase() {
         if (!(user instanceof Shopper))
             throw new UserCategoryConfusionError("Unable for an administrator to give orders.");
+        
         ((Shopper) user).purchase();
 	}
 	
@@ -178,6 +180,7 @@ public class Background {
 	public List<List<Order>> showPurchases() {
         if (!(user instanceof Shopper))
             throw new UserCategoryConfusionError("Unable to show purchases of an administrator.");
+        
         return ((Shopper) user).showPurchases();
 	}
 }

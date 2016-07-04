@@ -8,9 +8,9 @@ public abstract class User {
     public final String ID;
     private String password;
 
-    public User(Background background, String iD, String password) {
+    public User(Background background, String ID, String password) {
         this.background = background;
-        ID = iD;
+        this.ID = ID;
         this.password = password;
     }
 
@@ -20,20 +20,15 @@ public abstract class User {
      * @param password
      * @return
      */
-    public boolean login(String ID, String password) {
-        if (this.ID == ID && this.password == password) {
-            background.user = this;
-            return true;
-        }
-        return false;
+    public User login(String ID, String password) {
+        return this.ID == ID && this.password == password ? this : null;
     }
     
     /**
      * Logs out this if the current user is this.
      */
-    public void logout() {
-        if (background.user == this)
-            background.user = null;
+    public User logout() {
+        return null;
     }
     
     public void Browse() {
