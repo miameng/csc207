@@ -2,10 +2,12 @@ package merchandise;
 
 import java.util.Comparator;
 
-public class CompByAvai implements Comparator<Product> {
+import client.Item;
+
+public class CompByAvai implements Comparator<Item> {
 
     @Override
-    public int compare(Product arg0, Product arg1) {
-        return arg0.getQuantity() - arg1.getQuantity();
+    public int compare(Item arg0, Item arg1) {
+        return arg0.mainData() - arg1.mainData();
     }
 }

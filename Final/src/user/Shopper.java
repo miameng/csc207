@@ -3,17 +3,18 @@ package user;
 import java.util.LinkedList;
 import java.util.List;
 
+import client.Item;
 import merchandise.Order;
 
 public class Shopper extends User {
 
-    List<Order> cart;
-    List<List<Order>> purchases;
+    List<Item> cart;
+    List<List<Item>> purchases;
 
     public Shopper(String ID, String password) {
         super(ID, password);
-        cart = new LinkedList<Order>();
-        purchases = new LinkedList<List<Order>>();
+        cart = new LinkedList<Item>();
+        purchases = new LinkedList<List<Item>>();
     }
     
     /**
@@ -21,11 +22,13 @@ public class Shopper extends User {
      * @param order
      */
     public void addToCart(Order order) {
-        for (Order i : cart)
-            if (i.getProduct() == order.getProduct()) {
-                i.setQuantity(i.getQuantity() + order.getQuantity());
+        for (Item i : cart) {
+            Order o = (Order) i;
+            if (o.getProduct() == order.getProduct()) {
+                o.setQuantity(o.getQuantity() + order.getQuantity());
                 return;
             }
+        }
         cart.add(order);
     }
 
@@ -34,18 +37,18 @@ public class Shopper extends User {
      * Report errors to the background if the current user is an administrator.
      */
     public void purchase() throws Error {
-        for (Order o: cart)
-            o.getProduct().ship(o.getQuantity());
+        for (Item o: cart)
+            ((Order) o).getProduct().ship(((Order) o).getQuantity());
         
         purchases.add(cart);
-        cart = new LinkedList<Order>();
+        cart = new LinkedList<Item>();
     }
     
     /**
      * Shows a list of former purchases.
      * @return
      */
-    public List<List<Order>> showPurchases() {
+    public List<List<Item>> showPurchases() {
         return purchases;
     }
     

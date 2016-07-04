@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import merchandise.Category;
+import client.Item;
 import merchandise.Order;
 import merchandise.Product;
 import user.Administrator;
@@ -16,16 +16,15 @@ public class Background {
 	
     private User user;
 	private List<User> users;
-	private List<Product> products, selectedProducts;
-	private List<Category> categories;
+	private List<Item> products, selectedProducts, categories;
 	
 	public Background() {
 	    users = new LinkedList<User>();
-	    products = new ArrayList<Product>(); // in ID order
-        categories = new ArrayList<Category>(); // in ID order
+	    products = new ArrayList<Item>(); // in ID order
+        categories = new ArrayList<Item>(); // in ID order
 	    // TODO
 	    // read files for users, products and categories.
-	    selectedProducts = new LinkedList<Product>();
+	    selectedProducts = new LinkedList<Item>();
 	}
 	
 	/**
@@ -86,7 +85,7 @@ public class Background {
      * Throws UserCategoryConfusionError if the current user is an Shopper.
 	 * @return
 	 */
-	public List<Category> generateCategories() {
+	public List<Item> generateCategories() {
         if (!(user instanceof Administrator))
             throw new UserCategoryConfusionError("Unable for an shopper to maintain categories.");
         
@@ -153,11 +152,11 @@ public class Background {
      * @param inc
      * @return
      */
-    public List<Product> sortProducts(boolean byAvai, boolean inc) {
+    public List<Item> sortProducts(boolean byAvai, boolean inc) {
         if (!(user instanceof Administrator))
             throw new UserCategoryConfusionError("Unable for an shopper to maintain categories.");
         
-        return ((Administrator) user).sortProducts(new LinkedList<Product>(products), byAvai, inc);
+        return ((Administrator) user).sortProducts(new LinkedList<Item>(products), byAvai, inc);
     }
     
     /**
@@ -170,7 +169,8 @@ public class Background {
 	 */
 	public void addToCart(int ID, int quantity) {
         Product product;
-	    try {product = products.get(ID);
+	    try {
+	        product = (Product) products.get(ID);
 	    } catch (IndexOutOfBoundsException e) {
 	        throw new ProductDoesNotExistError();
 	    }
@@ -197,7 +197,7 @@ public class Background {
 	 * Shows the purchases of the current user.
 	 * Throws UserCategoryConfusionError if the current user is an administrator.
 	 */
-	public List<List<Order>> showPurchases() {
+	public List<List<Item>> showPurchases() {
         if (!(user instanceof Shopper))
             throw new UserCategoryConfusionError("Unable to show purchases of an administrator.");
         

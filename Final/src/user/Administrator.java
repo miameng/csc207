@@ -4,6 +4,7 @@ import java.awt.Image;
 import java.util.Collections;
 import java.util.List;
 
+import client.Item;
 import merchandise.Category;
 import merchandise.CompByAvai;
 import merchandise.CompByCate;
@@ -21,18 +22,18 @@ public class Administrator extends User {
      * @param categories
      * @param selectedProducts
      */
-    public void addCategory(String description, List<Category> categories, List<Product> Products) {
+    public void addCategory(String description, List<Item> categories, List<Item> Products) {
         Category category = null;
-        for (Category c: categories)
-            if (c.getDescription() == description) {
-                category = c; break;
+        for (Item c: categories)
+            if (((Category) c).getDescription() == description) {
+                category = (Category) c; break;
             }
         if (category == null) {
             category = new Category(description);
             categories.add(category);
         }
-        for (Product product: Products)
-            product.addCategory(category);
+        for (Item p: Products)
+            ((Product) p).addCategory(category);
     }
     
     /**
@@ -40,7 +41,7 @@ public class Administrator extends User {
      * @param categories
      * @return
      */
-    public List<Category> generateCategories(List<Category> categories) {
+    public List<Item> generateCategories(List<Item> categories) {
         return categories;
     }
     
@@ -52,7 +53,7 @@ public class Administrator extends User {
      * @param price
      * @param quantity
      */
-    public void addProduct(List<Product> products, 
+    public void addProduct(List<Item> products, 
             Image image, String description, double price, int quantity) {
         products.add(new Product(image, description, price, quantity));
     }
@@ -62,9 +63,9 @@ public class Administrator extends User {
      * @param products
      * @param image
      */
-    public void changeProductImage(List<Product> products, Image image) {
-        for (Product p: products)
-            p.setImage(image);
+    public void changeProductImage(List<Item> products, Image image) {
+        for (Item p: products)
+            ((Product) p).setImage(image);
     }
     
     /**
@@ -72,9 +73,9 @@ public class Administrator extends User {
      * @param products
      * @param description
      */
-    public void changeProductDiscription(List<Product> products, String description) {
-        for (Product p: products)
-            p.setDescription(description);
+    public void changeProductDiscription(List<Item> products, String description) {
+        for (Item p: products)
+            ((Product) p).setDescription(description);
     }
     
     /**
@@ -82,9 +83,9 @@ public class Administrator extends User {
      * @param products
      * @param price
      */
-    public void changeProductPrice(List<Product> products, double price) {
-        for (Product p: products)
-            p.setPrice(price);
+    public void changeProductPrice(List<Item> products, double price) {
+        for (Item p: products)
+            ((Product) p).setPrice(price);
     }
     
     /**
@@ -93,7 +94,7 @@ public class Administrator extends User {
      * @param byAvai
      * @param inc
      */
-    public List<Product> sortProducts(List<Product> products, boolean byAvai, boolean inc) {
+    public List<Item> sortProducts(List<Item> products, boolean byAvai, boolean inc) {
         Collections.sort(products, byAvai ? new CompByAvai() : new CompByCate());
         if (!inc) Collections.reverse(products);
         return products;

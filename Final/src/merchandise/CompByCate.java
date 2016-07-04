@@ -5,13 +5,13 @@ import java.util.Iterator;
 
 import client.Item;
 
-public class CompByCate implements Comparator<Product> {
+public class CompByCate implements Comparator<Item> {
 
     @Override
-    public int compare(Product o1, Product o2) {
+    public int compare(Item o1, Item o2) {
         // TODO Auto-generated method stub
-        Iterator<Item> i = o1.getCategories().iterator();
-        Iterator<Item> j = o2.getCategories().iterator();
+        Iterator<Item> i = o1.getTags().iterator();
+        Iterator<Item> j = o2.getTags().iterator();
         
         for (; i.hasNext() || j.hasNext(); ) {
             if (!j.hasNext()) return 1;
