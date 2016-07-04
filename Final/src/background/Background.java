@@ -22,9 +22,13 @@ public class Background {
 	    users = new LinkedList<User>();
 	    products = new ArrayList<Item>(); // in ID order
         categories = new ArrayList<Item>(); // in ID order
-	    // TODO
-	    // read files for users, products and categories.
+        loadFiles();
 	    selectedProducts = new LinkedList<Item>();
+	}
+	
+	private void loadFiles() {
+        // TODO
+        // read files for users, products and categories.
 	}
 	
 	/**
@@ -71,6 +75,10 @@ public class Background {
 	public void userLogout() {
 	    if (user == null)
 	        throw new UserCategoryConfusionError("Not logged in.");
+	    
+	    user = null;
+	    users = null;
+	    products = selectedProducts = categories = null;
 	}
 	
 	/**
