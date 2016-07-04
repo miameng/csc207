@@ -11,7 +11,7 @@ public class Category implements Item {
     private final int code;
     private final String description;
     private int quantity;
-    List<Item> products;
+    private List<Item> products;
     
     public Category(String description) {
         this.code = number++;

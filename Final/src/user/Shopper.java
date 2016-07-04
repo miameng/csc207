@@ -8,8 +8,8 @@ import merchandise.Order;
 
 public class Shopper extends User {
 
-    List<Item> cart;
-    List<List<Item>> purchases;
+    private List<Item> cart;
+    private List<List<Item>> purchases;
 
     public Shopper(String ID, String password) {
         super(ID, password);
