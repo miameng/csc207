@@ -10,6 +10,7 @@
  * public void userRegistration(String ID, String password, String type)
  * public void userLogin(String ID, String password)
  * public void userLogout()
+ * public void changeUserPassword(String Epassword, String password)
  * public void addCategory(String description)
  * public List<Item> generateCategories()
  * public void addProduct(Image image, String description, double price, int quantity)
