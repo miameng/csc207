@@ -48,24 +48,46 @@ public class Background {
 	
 	/**
 	 * Logs in a user with ID and password.
-	 * Throws UserPasswordWrongError if the password does not match.
-	 * Throws UserDoesNotExistError if the account does not exist. 
+	 * Throws UserLoginFailureError if the account does not exist. 
 	 * @param ID
 	 * @param password
 	 */
 	public void userLogin(String ID, String password) {
 	    for (User u: users) {
-	        user = u.login(ID, password);
-	        if (user != null) return;
+	        try {
+	            user.userCheck(ID, password, password);
+	        } catch (UserLoginFailureError e) {
+	            continue;
+	        }
+	        user = u; break;
 	    }
 	    throw new UserLoginFailureError();
 	}
 	
 	/**
 	 * Logs out the current user.
+     * Throws UserCategoryConfusionError if no one logged in.
 	 */
 	public void userLogout() {
-	    user = user.logout();
+	    if (user == null)
+	        throw new UserCategoryConfusionError("Not logged in.");
+	}
+	
+	/**
+	 * Changes the password for the current user.
+     * Throws UserCategoryConfusionError if no one logged in.
+     * Throws UserLoginFailureError if the prime password is incorrect.
+	 * @param Epassword
+	 * @param password
+	 */
+	public void changeUserPassword(String Epassword, String password) {
+	    if (user == null)
+            throw new UserCategoryConfusionError("Not logged in.");
+	    try {
+	        user.userCheck(user.ID, Epassword, password);
+	    } catch (UserLoginFailureError e) {
+	        throw new UserLoginFailureError("The input password is incorrect.");
+	    }
 	}
 	
 	/**

@@ -1,5 +1,7 @@
 package user;
 
+import background.UserLoginFailureError;
+
 public abstract class User {
     
     public final String ID;
@@ -11,24 +13,15 @@ public abstract class User {
     }
 
     /**
-     * Logs in this if ID and password are correct.
-     * @param ID
+     * Checks the user.
+     * Throws UserLoginFailureError if the check fails.
+     * @param expassword
      * @param password
-     * @return
      */
-    public User login(String ID, String password) {
-        return this.ID == ID && this.password == password ? this : null;
+    public void userCheck(String ID, String expassword, String password) {
+        if (!ID.equals(this.ID) || !expassword.equals(this.password))
+            throw new UserLoginFailureError();
+        
+        this.password = password;
     }
-    
-    /**
-     * Logs out this if the current user is this.
-     */
-    public User logout() {
-        return null;
-    }
-    
-    public void Browse() {
-        // TODO
-    }
-
 }

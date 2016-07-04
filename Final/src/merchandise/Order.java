@@ -23,7 +23,7 @@ public class Order implements Item {
     @Override
     public int mainData() { return product.mainData(); }
     @Override
-    public String extraData() { return String.format("%.2f", quantity * product.getPrice()); }
+    public String extraData() { return String.format("%.2f", product.getPrice()); }
     @Override
     public List<Item> getTags() { return product.getTags(); }
 
