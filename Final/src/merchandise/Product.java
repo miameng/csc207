@@ -15,7 +15,7 @@ public class Product implements Item {
     private String description;
     private double price;
     private int quantity;
-    List<Item> categories;
+    private List<Item> categories;
 
     public Product(Image image, String description, double price, int quantity) {
         ID = ++number;

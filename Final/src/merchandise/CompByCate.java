@@ -8,10 +8,10 @@ import client.Item;
 public class CompByCate implements Comparator<Item> {
 
     @Override
-    public int compare(Item o1, Item o2) {
+    public int compare(Item i1, Item i2) {
         // TODO Auto-generated method stub
-        Iterator<Item> i = o1.getTags().iterator();
-        Iterator<Item> j = o2.getTags().iterator();
+        Iterator<Item> i = ((Product) i1).getCategories().iterator();
+        Iterator<Item> j = ((Product) i2).getCategories().iterator();
         
         for (; i.hasNext() || j.hasNext(); ) {
             if (!j.hasNext()) return 1;

@@ -9,7 +9,7 @@ import client.Item;
 public class Category implements Item {
     private static int number;
     private final int code;
-    private String description;
+    private final String description;
     private int quantity;
     List<Item> products;
     
@@ -36,12 +36,13 @@ public class Category implements Item {
     public String getDescription() {
         return description;
     }
-    public void setDescription(String description) {
-        this.description = description;
-    }
     public List<Item> getProducts() {
         return products;
     }
+    /**
+     * Adds a product.
+     * @param product
+     */
     public void addProduct(Product product) {
         for (Item s: products)
             if ((Product) s == product) return;
