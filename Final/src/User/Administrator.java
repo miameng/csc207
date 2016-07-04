@@ -1,10 +1,13 @@
 package User;
 
 import java.awt.Image;
+import java.util.Collections;
 import java.util.List;
 
 import Background.Background;
 import Product.Category;
+import Product.CompByAvai;
+import Product.CompByCate;
 import Product.Product;
 
 public class Administrator extends User {
@@ -86,4 +89,14 @@ public class Administrator extends User {
             p.setPrice(price);
     }
     
+    /**
+     * Sorts the products by given order.
+     * @param products
+     * @param byAvai
+     * @param inc
+     */
+    public void sortProducts(List<Product> products, boolean byAvai, boolean inc) {
+        Collections.sort(products, byAvai ? new CompByAvai() : new CompByCate());
+        if (!inc) Collections.reverse(products);
+    }
 }

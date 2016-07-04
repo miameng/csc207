@@ -14,16 +14,15 @@ import User.User;
 
 public class Background {
 	
-    public User user;
-    Client client;
-	List<User> users;
-	List<Product> products, selectedProducts;
-	List<Category> categories, selectedCats;
+    private User user;
+	private List<User> users;
+	private List<Product> products, selectedProducts;
+	private List<Category> categories;
 	
-	public Background(Client client) {
-	    this.client = client;
+	public Background() {
 	    // TODO
-	    // read files for users and inventories
+	    // read files for users and products
+	    selectedProducts = new LinkedList<Product>();
         categories = new LinkedList<Category>();
 	}
 	
@@ -144,6 +143,13 @@ public class Background {
             throw new UserCategoryConfusionError("Unable for an shopper to maintain categories.");
         
         ((Administrator) user).changeProductPrice(selectedProducts, price);
+    }
+    
+    public void sortProducts(boolean byAvai, boolean inc) {
+        if (!(user instanceof Administrator))
+            throw new UserCategoryConfusionError("Unable for an shopper to maintain categories.");
+        
+        ((Administrator) user).sortProducts(products, byAvai, inc);
     }
     
     /**
