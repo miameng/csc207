@@ -73,7 +73,7 @@ public class Product implements Item {
     }
 
     /**
-     * Shows if there are available quantity of wanted goods
+     * Shows if there are available quantity of wanted goods.
      * @param wanted
      * @return
      */
