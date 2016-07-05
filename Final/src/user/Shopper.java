@@ -17,6 +17,12 @@ public class Shopper extends User {
         purchases = new LinkedList<List<Item>>();
     }
     
+    public Shopper(String ID, String password, List<Item> cart, List<List<Item>> purchases) {
+        this(ID, password);
+        this.cart = cart;
+        this.purchases = purchases;
+    }
+    
     /**
      * Adds an order to the cart.
      * @param order

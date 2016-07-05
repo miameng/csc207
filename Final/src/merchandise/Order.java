@@ -7,28 +7,28 @@ import client.Item;
 
 public class Order implements Item {
 
-    private final Product product;
+    private final Product PRODUCT;
     private int quantity;
 
     public Order(Product product, int quantity) {
-        this.product = product;
+        this.PRODUCT = product;
         this.quantity = quantity;
         // TODO Auto-generated constructor stub
     }
 
     @Override
-    public Image image() { return product.image(); }
+    public Image image() { return PRODUCT.image(); }
     @Override
-    public String description() { return product.description(); }
+    public String description() { return PRODUCT.description(); }
     @Override
-    public int mainData() { return product.mainData(); }
+    public int mainData() { return PRODUCT.mainData(); }
     @Override
-    public String extraData() { return String.format("%.2f", product.getPrice()); }
+    public String extraData() { return String.format("%.2f", PRODUCT.getPrice()); }
     @Override
-    public List<Item> getTags() { return product.getTags(); }
+    public List<Item> getTags() { return PRODUCT.getTags(); }
 
     public Product getProduct() {
-        return product;
+        return PRODUCT;
     }
     public int getQuantity() {
         return quantity;

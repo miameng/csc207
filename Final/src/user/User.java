@@ -11,6 +11,8 @@ public abstract class User {
         this.ID = ID;
         this.password = password;
     }
+    
+    public String getPassword() { return password; }
 
     /**
      * Checks the user.

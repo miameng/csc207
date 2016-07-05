@@ -8,21 +8,21 @@ import client.Item;
 
 public class Category implements Item {
     private static int number;
-    private final int code;
-    private final String description;
+    public final int CODE;
+    private final String DESCRIPTION;
     private int quantity;
     private List<Item> products;
     
     public Category(String description) {
-        this.code = number++;
-        this.description = description;
+        this.CODE = number++;
+        this.DESCRIPTION = description;
         products = new LinkedList<Item>();
     }
     
     @Override
     public Image image() { return null; }
     @Override
-    public String description() { return description; }
+    public String description() { return DESCRIPTION; }
     @Override
     public int mainData() { return quantity; }
     @Override
@@ -30,11 +30,8 @@ public class Category implements Item {
     @Override
     public List<Item> getTags() { return products; }
 
-    public int getCode() {
-        return code;
-    }
     public String getDescription() {
-        return description;
+        return DESCRIPTION;
     }
     public List<Item> getProducts() {
         return products;

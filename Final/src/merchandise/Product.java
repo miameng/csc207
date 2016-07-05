@@ -1,8 +1,13 @@
 package merchandise;
 
 import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+
+import javax.imageio.ImageIO;
 
 import background.MerchandiseShortError;
 import client.Item;
@@ -10,14 +15,15 @@ import client.Item;
 public class Product implements Item {
 
     private static int number;
-    private final int ID;
-    private Image image;
+    public final int ID;
+    private static Map<String, Image> images;
+    private String image;
     private String description;
     private double price;
     private int quantity;
     private List<Item> categories;
 
-    public Product(Image image, String description, double price, int quantity) {
+    public Product(String image, String description, double price, int quantity) {
         ID = ++number;
         this.image = image;
         this.description = description;
@@ -27,7 +33,23 @@ public class Product implements Item {
     }
     
     @Override
-    public Image image() { return image; }
+    public Image image() {
+        if (image == null)
+            return null;
+        if (!images.containsKey(image)) {
+            File f = new File(image);
+            if (f.exists() && !f.isDirectory() && image.length() < 5 && 
+                    image.substring(image.length() - 3).equals("png"))
+                try {
+                    images.put(image, ImageIO.read(new File(image)));
+                } catch (IOException e) {
+                    images.put(image, null);
+                }
+            else 
+                images.put(image, null);
+        }
+        return images.get(image);
+    }
     @Override
     public String description() { return description; }
     @Override
@@ -37,10 +59,10 @@ public class Product implements Item {
     @Override
     public List<Item> getTags() { return categories; }
 
-    public Image getImage() {
+    public String getImage() {
         return image;
     }
-    public void setImage(Image image) {
+    public void setImage(String image) {
         this.image = image;
     }
     public String getDescription() {
@@ -48,9 +70,6 @@ public class Product implements Item {
     }
     public void setDescription(String description) {
         this.description = description;
-    }
-    public int getID() {
-        return ID;
     }
     public int getQuantity() {
         return quantity;

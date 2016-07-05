@@ -1,6 +1,5 @@
 package user;
 
-import java.awt.Image;
 import java.util.Collections;
 import java.util.List;
 
@@ -53,9 +52,11 @@ public class Administrator extends User {
      * @param price
      * @param quantity
      */
-    public void addProduct(List<Item> products, 
-            Image image, String description, double price, int quantity) {
-        products.add(new Product(image, description, price, quantity));
+    public Product addProduct(List<Item> products, 
+            String image, String description, double price, int quantity) {
+        Product result = new Product(image, description, price, quantity); 
+        products.add(result);
+        return result;
     }
     
     /**
@@ -63,7 +64,7 @@ public class Administrator extends User {
      * @param products
      * @param image
      */
-    public void changeProductImage(List<Item> products, Image image) {
+    public void changeProductImage(List<Item> products, String image) {
         for (Item p: products)
             ((Product) p).setImage(image);
     }
