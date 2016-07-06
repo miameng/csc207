@@ -21,7 +21,7 @@ public class Administrator extends User {
      * @param categories
      * @param selectedProducts
      */
-    public void addCategory(String description, List<Item> categories, List<Item> Products) {
+    public void addCategory(String description, List<Item> categories, Item product) {
         Category category = null;
         for (Item c: categories)
             if (((Category) c).getDescription() == description) {
@@ -31,8 +31,7 @@ public class Administrator extends User {
             category = new Category(description);
             categories.add(category);
         }
-        for (Item p: Products)
-            ((Product) p).addCategory(category);
+        ((Product) product).addCategory(category);
     }
     
     /**
@@ -64,9 +63,8 @@ public class Administrator extends User {
      * @param products
      * @param image
      */
-    public void changeProductImage(List<Item> products, String image) {
-        for (Item p: products)
-            ((Product) p).setImage(image);
+    public void changeProductImage(Item product, String image) {
+        ((Product) product).setImage(image);
     }
     
     /**
@@ -74,9 +72,8 @@ public class Administrator extends User {
      * @param products
      * @param description
      */
-    public void changeProductDiscription(List<Item> products, String description) {
-        for (Item p: products)
-            ((Product) p).setDescription(description);
+    public void changeProductDiscription(Item product, String description) {
+        ((Product) product).setDescription(description);
     }
     
     /**
@@ -84,9 +81,8 @@ public class Administrator extends User {
      * @param products
      * @param price
      */
-    public void changeProductPrice(List<Item> products, double price) {
-        for (Item p: products)
-            ((Product) p).setPrice(price);
+    public void changeProductPrice(Item product, double price) {
+        ((Product) product).setPrice(price);
     }
     
     /**

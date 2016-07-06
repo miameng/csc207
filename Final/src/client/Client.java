@@ -7,27 +7,27 @@
  * 
  * Methods to use:
  * 
- * public void userRegistration(String ID, String password, String type)
+ * public Background() throws IOException
+ * public void userRegistration(String ID, String password, String type) throws IOException
  * public void userLogin(String ID, String password)
  * public void userLogout()
- * public void changeUserPassword(String Epassword, String password)
- * public void addCategory(String description)
+ * public void changeUserPassword(String formerPassword, String password) throws IOException
+ * public void addCategory(Item product, String description) throws IOException
  * public List<Item> generateCategories()
- * public void addProduct(Image image, String description, double price, int quantity)
- * public void changeProductImage(Image image)
- * public void changeProductDiscription(String description)
- * public void changeProductPrice(double price)
- * public void sortProducts(boolean byAvai, boolean inc)
- * public void addToCart(int ID, int quantity)
- * public void purchase()
+ * public void addProduct(String image, String description, double price, int quantity)
+ * public void changeProductImage(Item product, String image) throws IOException
+ * public void changeProductDiscription(Product product, String description) throws IOException
+ * public void changeProductPrice(Product product, double price) throws IOException
+ * public void addToCart(Item i, int quantity) throws IOException
+ * public void purchase() throws IOException
  * public List<List<Item>> showPurchases()
  * 
  * Response to receive:
  * 
+ * IOException (if it fails to make local changes)
  * List<Item>
  * List<List<Item>>
  * MerchandiseShortError
- * ProductDoesNotExistError
  * UserAlreadyExistsError
  * UserCategoryConfusionError
  * UserCategoryWrongError

@@ -16,7 +16,7 @@ public class Background {
 	
     private User user;
 	private List<User> users;
-	private List<Item> products, selectedProducts, categories;
+	private List<Item> products, categories;
 	
 	public Background() throws IOException {
 	    users = new LinkedList<User>();
@@ -24,7 +24,6 @@ public class Background {
         categories = new ArrayList<Item>(); // in ID order
         FileIO.scanProducts(products, categories);
         FileIO.scanUsers(users, products);
-	    selectedProducts = new LinkedList<Item>();
         FileIO.reprint(products, users);
 	}
 	
@@ -79,7 +78,7 @@ public class Background {
 	    
 	    user = null;
 	    users = null;
-	    products = selectedProducts = categories = null;
+	    products = categories = null;
 	}
 	
 	/**
@@ -90,11 +89,11 @@ public class Background {
 	 * @param password
 	 * @throws IOException 
 	 */
-	public void changeUserPassword(String Epassword, String password) throws IOException {
+	public void changeUserPassword(String formerPassword, String password) throws IOException {
 	    if (user == null)
             throw new UserCategoryConfusionError("Not logged in.");
 	    try {
-	        user.userCheck(user.ID, Epassword, password);
+	        user.userCheck(user.ID, formerPassword, password);
 	    } catch (UserLoginFailureError e) {
 	        throw new UserLoginFailureError("The input password is incorrect.");
 	    }
@@ -108,13 +107,12 @@ public class Background {
      * @param description
 	 * @throws IOException 
 	 */
-	public void addCategory(String description) throws IOException {
+	public void addCategory(Item product, String description) throws IOException {
 	    if (!(user instanceof Administrator))
 	        throw new UserCategoryConfusionError("Unable for an shopper to maintain categories.");
 	    
-	    ((Administrator) user).addCategory(description, categories, selectedProducts);
-	    for (Item p: selectedProducts)
-	        FileIO.printProduct((Product) p);
+	    ((Administrator) user).addCategory(description, categories, product);
+        FileIO.printProduct((Product) product);
 	}
 	
 	/**
@@ -156,13 +154,12 @@ public class Background {
      * @param image
      * @throws IOException 
      */
-    public void changeProductImage(String image) throws IOException {
+    public void changeProductImage(Item product, String image) throws IOException {
         if (!(user instanceof Administrator))
             throw new UserCategoryConfusionError("Unable for an shopper to maintain categories.");
         
-        ((Administrator) user).changeProductImage(selectedProducts, image);
-        for (Item p: selectedProducts)
-            FileIO.printProduct((Product) p);
+        ((Administrator) user).changeProductImage(product, image);
+        FileIO.printProduct((Product) product);
     }
     
     /**
@@ -172,13 +169,12 @@ public class Background {
      * @param description
      * @throws IOException 
      */
-    public void changeProductDiscription(String description) throws IOException {
+    public void changeProductDiscription(Product product, String description) throws IOException {
         if (!(user instanceof Administrator))
             throw new UserCategoryConfusionError("Unable for an shopper to maintain categories.");
         
-        ((Administrator) user).changeProductDiscription(selectedProducts, description);
-        for (Item p: selectedProducts)
-            FileIO.printProduct((Product) p);
+        ((Administrator) user).changeProductDiscription(product, description);
+        FileIO.printProduct((Product) product);
     }
     
     /**
@@ -188,13 +184,12 @@ public class Background {
      * @param price
      * @throws IOException 
      */
-    public void changeProductPrice(double price) throws IOException {
+    public void changeProductPrice(Product product, double price) throws IOException {
         if (!(user instanceof Administrator))
             throw new UserCategoryConfusionError("Unable for an shopper to maintain categories.");
         
-        ((Administrator) user).changeProductPrice(selectedProducts, price);
-        for (Item p: selectedProducts)
-            FileIO.printProduct((Product) p);
+        ((Administrator) user).changeProductPrice(product, price);
+        FileIO.printProduct((Product) product);
     }
     
     /**
@@ -212,26 +207,19 @@ public class Background {
     
     /**
 	 * Add the goods of quantity in product to the cart.
-	 * Throws ProductDoesNotExistError if the product to add does not exist.
      * Throws UserCategoryConfusionError if the current user is an administrator.
      * Throws MerchandiseShortError if there is not enough goods available in the stock.
 	 * @param product
 	 * @param quantity
      * @throws IOException 
 	 */
-	public void addToCart(int ID, int quantity) throws IOException {
-        Product product;
-	    try {
-	        product = (Product) products.get(ID);
-	    } catch (IndexOutOfBoundsException e) {
-	        throw new ProductDoesNotExistError();
-	    }
+	public void addToCart(Item product, int quantity) throws IOException {
         if (!(user instanceof Shopper))
             throw new UserCategoryConfusionError("Unable for an administrator to add goods to the cart.");
-        if (!product.available(quantity))
+        if (!((Product) product).available(quantity))
 	        throw new MerchandiseShortError();
         
-        ((Shopper) user).addToCart(new Order(product, quantity));
+        ((Shopper) user).addToCart(new Order((Product) product, quantity));
         FileIO.printUser(user);
 	} 
 	
